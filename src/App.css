@@ -1,38 +1,91 @@
-.App {
-  text-align: center;
+.main {
+    margin-top: 50px;
+}
+.itemWrap {
+    margin: 0 0 20px 175px;
+    display: flex;
+    justify-content: space-between;
+}
+.itemWrap > div {
+    margin-left: 70px;
+}
+.itemClass {
+    margin: 0 100px 0 100px;
+    width: 200px;
+    text-align: center;
+    padding: 10px 0;
+    background: silver;
+    font-weight: 900;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+.classesWrap {
+    position: relative;
+    margin: 0 0 20px 140px;
+    display: flex;
+    justify-content: space-between;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.itemDaysWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.day {
+    width: 350px;
+    margin: 0 0 50px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    padding: 10px;
+}
+.day > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 20px;
+    height: 50px;
+    margin-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.subject-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 2px solid black;
+    width: 60%;
+    height: 100%;
+    margin-right: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.day div .subject-room {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 2px solid black;
+    width: 30%;
+    height: 100%;
 }
+
+.listDays {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 250px;
+    left: -400px;
+}
+.listDays  div {
+    margin: 0 20% 0 50%;
+    font-size: 30px;
+    font-weight: 900;
+}
+
