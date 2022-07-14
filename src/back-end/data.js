@@ -133,28 +133,19 @@ export const rooms = [
   { name: 30 },
 ];
 
-interface IDataSubject {
-  id: number;
-  name: string;
-}
-
-interface ITeachers {
-  id: number;
-  name: string;
-}
-
 export function showTimeTable() {
+  console.log("render");
   teacher();
   const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "Пятниця"];
-  classSchool.map((value: any) =>
-    days.map((item: string) => (value[item] = randomSubject()))
+  classSchool.map((value) =>
+    days.map((item) => (value[item] = randomSubject()))
   );
   days.map((day) => showRepeat(classSchool, day));
   return classSchool;
 }
 
 function teacher() {
-  teachers.map((value: ITeachers | any) => {
+  teachers.map((value) => {
     value.subjects = [];
     // teacher should hav min 1 and max 5 subjects
     const randLess = Math.floor(Math.random() * (5 - 1)) + 1;
@@ -189,10 +180,10 @@ function randomSubject() {
   return arr;
 }
 
-function addTeacher(data: IDataSubject) {
+function addTeacher(data) {
   const id = data.id;
-  const arr: string[] = [];
-  teachers.map((value: ITeachers | any) => {
+  const arr = [];
+  teachers.map((value) => {
     for (const i of value.subjects) {
       if (id === i.id) {
         arr.push(value.name);

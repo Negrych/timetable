@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import Timetable from "../Timetable/Timetable";
 import { days } from "../../variable/listDays";
 import "../../App.css";
-
-import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
+import PropTypes from "prop-types";
 
 const Class = ({ classItem, state, setState }) => {
   const [localState, setLocalState] = useState(null);
@@ -135,7 +134,6 @@ const Class = ({ classItem, state, setState }) => {
     });
     setState(newState);
   }
-
   return (
     <div className={"itemDaysWrap"}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
