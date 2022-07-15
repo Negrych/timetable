@@ -133,30 +133,19 @@ export const rooms = [
   { name: 30 },
 ];
 
+// create timetable for all classes
+// example {name:"5A", "Понеділок":[subjects],"Вівторок":...]}
 export function showTimeTable() {
-  console.log("render");
   teacher();
   const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "Пятниця"];
-  classSchool.map((value) =>
-    days.map((item) => (value[item] = randomSubject()))
+  classSchool.map((value: any) =>
+    days.map((item: string) => (value[item] = randomSubject()))
   );
   days.map((day) => showRepeat(classSchool, day));
   return classSchool;
 }
 
-function teacher() {
-  teachers.map((value) => {
-    value.subjects = [];
-    // teacher should hav min 1 and max 5 subjects
-    const randLess = Math.floor(Math.random() * (5 - 1)) + 1;
-    for (let i = 1; i <= randLess; i++) {
-      const rand = Math.floor(Math.random() * (subjects.length - 1));
-      value.subjects.push(subjects[rand]);
-    }
-    value.subjects = new Set(value.subjects);
-  });
-}
-
+// create random subject for function show Timetable
 function randomSubject() {
   const arr = [];
   for (let i = 1; i <= 7; i++) {
@@ -180,10 +169,26 @@ function randomSubject() {
   return arr;
 }
 
-function addTeacher(data) {
+// add subjects for teacher
+function teacher() {
+  teachers.map((value: any) => {
+    value.subjects = [];
+    // teacher should hav min 1 and max 5 subjects
+    const randLess = Math.floor(Math.random() * (5 - 1)) + 1;
+    for (let i = 1; i <= randLess; i++) {
+      const rand = Math.floor(Math.random() * (subjects.length - 1));
+      value.subjects.push(subjects[rand]);
+    }
+    value.subjects = new Set(value.subjects);
+  });
+}
+
+// add teacher for subject call in random subject function
+function addTeacher(data: { id: number; name: string }) {
   const id = data.id;
-  const arr = [];
-  teachers.map((value) => {
+  const arr: string[] = [];
+  teachers.map((value: Record<any, any>) => {
+    // if teacher have this subject
     for (const i of value.subjects) {
       if (id === i.id) {
         arr.push(value.name);

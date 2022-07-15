@@ -1,42 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Class from "./components/Class/Class";
 import { days } from "./variable/listDays";
-import { getData } from "./service/timetableService";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { getSubject } from "./store/subjectSlice";
 
 const App = () => {
-  const [state, setState] = useState(null);
+  const dispatch = useAppDispatch();
+  const { subjects } = useAppSelector((state) => state.subjectsReducer);
 
   useEffect(() => {
-    getData().then((value) => setState(value));
+    dispatch(getSubject());
   }, []);
 
   return (
     <div className={"main"}>
       <div className={"itemWrap"}>
-        {state &&
-          state.map((value) => (
+        {subjects &&
+          subjects.map((value: any) => (
             <div key={value.id}>
               <div className={"itemClass"}>{value.name}</div>
             </div>
           ))}
       </div>
       <div className={"classesWrap"}>
-        {state && (
+        {subjects && (
           <div className={"listDays"}>
             {days.map((value, index) => (
               <div key={index}>{value}</div>
             ))}
           </div>
         )}
-        {state &&
-          state.map((value) => (
-            <Class
-              key={value.id}
-              classItem={value}
-              state={state}
-              setState={setState}
-            />
+        {subjects &&
+          subjects.map((value: any) => (
+            <Class key={value.id} classItem={value} />
           ))}
       </div>
     </div>

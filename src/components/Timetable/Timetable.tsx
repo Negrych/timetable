@@ -1,13 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import "../../App.css";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import PropTypes from "prop-types";
 
-const Timetable = ({ classItem, day }) => {
+const Timetable: FC<any> = ({ classItem, day }) => {
   return (
     <div style={{ height: "500px" }} className={"day"}>
       {classItem &&
-        classItem[day].map((value, index) => {
+        classItem[day].map((value: any, index: number) => {
           if (value) {
             return (
               <div key={index}>
@@ -21,7 +20,6 @@ const Timetable = ({ classItem, day }) => {
                     droppableId={`${
                       day + "-" + value.id + "-" + classItem.name
                     }`}
-                    day={day}
                     key={value.id}
                   >
                     {(provided, snapshot) => (
@@ -65,11 +63,6 @@ const Timetable = ({ classItem, day }) => {
         })}
     </div>
   );
-};
-
-Timetable.propTypes = {
-  classItem: PropTypes.object,
-  day: PropTypes.string,
 };
 
 export default Timetable;
