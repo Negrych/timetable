@@ -1,15 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getData } from "../service/timetableService";
+import { IData } from "../interfaces/interfaces";
 
-const initialState: any = {
-  subjects: null,
+interface IState {
+  subjects: IData[];
+}
+
+const initialState: IState = {
+  subjects: [],
 };
 
 export const getSubject = createAsyncThunk(
   "subjectSlice/getSubjects",
   async (_, { dispatch }) => {
     const subjects = await getData();
-    dispatch(setSubject({ subjects: subjects }));
+    dispatch(setSubject(subjects));
   }
 );
 
@@ -17,8 +22,8 @@ const subjectSlice = createSlice({
   name: "subjectSlice",
   initialState,
   reducers: {
-    setSubject: (state, action: PayloadAction<{ subjects: any }>) => {
-      state.subjects = action.payload.subjects;
+    setSubject: (state, action: PayloadAction<IData[]>) => {
+      state.subjects = action.payload;
     },
   },
 });

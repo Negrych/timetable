@@ -1,4 +1,6 @@
+import { days } from "../variable/listDays";
 import { showRepeat } from "../functions/functions";
+import { v4 } from "uuid";
 
 export const teachers = [
   { id: 1, name: "Негрич П  М" },
@@ -133,20 +135,20 @@ export const rooms = [
   { name: 30 },
 ];
 
-// create timetable for all classes
-// example {name:"5A", "Понеділок":[subjects],"Вівторок":...]}
+const teachersListWithSubject = teacher();
+
 export function showTimeTable() {
-  teacher();
-  const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "Пятниця"];
-  classSchool.map((value: any) =>
-    days.map((item: string) => (value[item] = randomSubject()))
-  );
-  days.map((day) => showRepeat(classSchool, day));
-  return classSchool;
+  const timeTable = classSchool.map((value: { id: string; name: string }) => {
+    return {
+      ...value,
+      timetable: days.map(() => randomSubject(subjects)),
+    };
+  });
+  days.forEach((value, index) => showRepeat(timeTable, index));
+  return timeTable;
 }
 
-// create random subject for function show Timetable
-function randomSubject() {
+function randomSubject(subjects: { id: number; name: string }[]) {
   const arr = [];
   for (let i = 1; i <= 7; i++) {
     const rand = Math.floor(Math.random() * (subjects.length - 1));
@@ -155,14 +157,14 @@ function randomSubject() {
     if (i === randLess) {
       arr.push({
         subject: { name: "" },
-        id: setTimeout(() => new Date().getMilliseconds(), 1),
+        id: v4(),
       });
     } else {
       arr.push({
         subject: subjects[rand],
-        teacher: addTeacher(subjects[rand]),
+        teacher: addTeacher(subjects[rand], teachersListWithSubject),
         room: rooms[randRoom],
-        id: setTimeout(() => new Date().getMilliseconds(), 1),
+        id: v4(),
       });
     }
   }
@@ -171,34 +173,50 @@ function randomSubject() {
 
 // add subjects for teacher
 function teacher() {
-  teachers.map((value: any) => {
-    value.subjects = [];
-    // teacher should hav min 1 and max 5 subjects
-    const randLess = Math.floor(Math.random() * (5 - 1)) + 1;
-    for (let i = 1; i <= randLess; i++) {
-      const rand = Math.floor(Math.random() * (subjects.length - 1));
-      value.subjects.push(subjects[rand]);
-    }
-    value.subjects = new Set(value.subjects);
+  return teachers.map((value) => {
+    return { ...value, subjectsTeacher: createSubjectForTeacher(subjects) };
   });
 }
 
+function createSubjectForTeacher(subjects: { id: number; name: string }[]) {
+  const arr: { id: number; name: string }[] = [];
+  // teacher should have min 1 and max 5 subjects
+  const randLess = Math.floor(Math.random() * (5 - 1)) + 1;
+  for (let i = 1; i <= randLess; i++) {
+    const rand = Math.floor(Math.random() * (subjects.length - 1));
+    arr.push(subjects[rand]);
+  }
+  return arr.filter((value, index) => index === arr.indexOf(value));
+}
+
 // add teacher for subject call in random subject function
-function addTeacher(data: { id: number; name: string }) {
+function addTeacher(
+  data: { id: number },
+  teachersList: {
+    id: number;
+    name: string;
+    subjectsTeacher: { id: number; name: string }[];
+  }[]
+) {
   const id = data.id;
-  const arr: string[] = [];
-  teachers.map((value: Record<any, any>) => {
-    // if teacher have this subject
-    for (const i of value.subjects) {
-      if (id === i.id) {
-        arr.push(value.name);
+  let arr = teachersList.map(
+    (value: {
+      id: number;
+      name: string;
+      subjectsTeacher: { id: number; name: string }[];
+    }) => {
+      // if teacher have this subject
+      for (const i of value.subjectsTeacher) {
+        if (id === i.id) {
+          return value.name;
+        }
       }
     }
-  });
+  );
+  arr = arr.filter((value: string | undefined) => value !== undefined);
   if (arr.length) {
     return arr;
   } else {
-    arr.push(teachers[0].name);
-    return arr;
+    return [teachers[0].name];
   }
 }

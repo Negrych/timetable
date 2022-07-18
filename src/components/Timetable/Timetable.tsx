@@ -1,24 +1,35 @@
 import React, { FC } from "react";
 import "../../App.css";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import { ITimetable } from "../../interfaces/interfaces";
 
-const Timetable: FC<any> = ({ classItem, day }) => {
+interface IProps {
+  classItem: {
+    name: string;
+  };
+  oneSubject: ITimetable[];
+  day: number;
+}
+
+const Timetable: FC<IProps> = ({ classItem, oneSubject, day }) => {
   return (
     <div style={{ height: "500px" }} className={"day"}>
       {classItem &&
-        classItem[day].map((value: any, index: number) => {
+        oneSubject.map((value: ITimetable, index: number) => {
           if (value) {
             return (
               <div key={index}>
                 <div
                   style={
-                    value.room && { backgroundColor: value.repeat ? "red" : "" }
+                    value.room && {
+                      backgroundColor: value.repeat ? "red" : "",
+                    }
                   }
                   className={"subject-name"}
                 >
                   <Droppable
                     droppableId={`${
-                      day + "-" + value.id + "-" + classItem.name
+                      day + "=" + index + "=" + classItem.name + "=" + value.id
                     }`}
                     key={value.id}
                   >
@@ -33,10 +44,10 @@ const Timetable: FC<any> = ({ classItem, day }) => {
                         ref={provided.innerRef}
                       >
                         <Draggable
-                          isDragDisabled={!value.subject.name}
-                          key={value.id}
+                          isDragDisabled={!value.subject?.name}
+                          key={Number(String(day + index))}
                           draggableId={`${value.id}`}
-                          index={value.id}
+                          index={index}
                         >
                           {(provided) => (
                             <div
@@ -45,7 +56,7 @@ const Timetable: FC<any> = ({ classItem, day }) => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <div>{value.subject.name}</div>
+                              <div>{value.subject?.name}</div>
                             </div>
                           )}
                         </Draggable>

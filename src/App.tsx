@@ -4,11 +4,11 @@ import Class from "./components/Class/Class";
 import { days } from "./variable/listDays";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { getSubject } from "./store/subjectSlice";
+import { IData } from "./interfaces/interfaces";
 
 const App = () => {
   const dispatch = useAppDispatch();
   const { subjects } = useAppSelector((state) => state.subjectsReducer);
-
   useEffect(() => {
     dispatch(getSubject());
   }, []);
@@ -16,15 +16,15 @@ const App = () => {
   return (
     <div className={"main"}>
       <div className={"itemWrap"}>
-        {subjects &&
-          subjects.map((value: any) => (
+        {subjects.length !== 0 &&
+          subjects.map((value: IData) => (
             <div key={value.id}>
               <div className={"itemClass"}>{value.name}</div>
             </div>
           ))}
       </div>
       <div className={"classesWrap"}>
-        {subjects && (
+        {subjects.length !== 0 && (
           <div className={"listDays"}>
             {days.map((value, index) => (
               <div key={index}>{value}</div>
@@ -32,7 +32,7 @@ const App = () => {
           </div>
         )}
         {subjects &&
-          subjects.map((value: any) => (
+          subjects.map((value: IData) => (
             <Class key={value.id} classItem={value} />
           ))}
       </div>
