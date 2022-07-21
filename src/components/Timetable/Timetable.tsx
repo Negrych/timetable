@@ -21,7 +21,7 @@ const Timetable: FC<IProps> = ({ oneSubject, day, className }) => {
               index={index}
               repeat={value.repeat}
               day={day}
-              subject={value.subject}
+              subject={Array.isArray(value) ? value : value.subject}
               id={value.id}
               room={value.room}
               className={className}

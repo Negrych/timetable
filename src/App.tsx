@@ -9,6 +9,7 @@ import { IData } from "./interfaces/interfaces";
 const App = () => {
   const dispatch = useAppDispatch();
   const { subjects } = useAppSelector((state) => state.subjectsReducer);
+
   useEffect(() => {
     dispatch(getSubject());
   }, []);

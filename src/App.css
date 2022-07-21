@@ -7,10 +7,10 @@
     justify-content: space-between;
 }
 .itemWrap > div {
-    margin-left: 70px;
+    margin-left: 100px;
 }
 .itemClass {
-    margin: 0 100px 0 100px;
+    margin: 0 225px 0 100px;
     width: 200px;
     text-align: center;
     padding: 10px 0;
@@ -35,7 +35,7 @@
 }
 
 .day {
-    width: 350px;
+    width: 500px;
     margin: 0 0 50px 100px;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@
     border: 2px solid black;
     padding: 10px;
 }
-.day > div {
+.day > div, .day .groupWrap {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,4 +89,24 @@
     font-size: 30px;
     font-weight: 900;
 }
+.day .groupWrap {
+    width: 96%;
+}
+.groupWrap > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.groupWrap > div:nth-child(2) {
+    width: 10px;
+    margin: 0 20px;
+}
+.groupWrap div {
+    text-align: center;
+}
+
+
+
 

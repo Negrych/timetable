@@ -1,6 +1,6 @@
 import React, { FC, memo } from "react";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { subjects } from "../../back-end/data";
+import RenderOneSubject from "../RenderOneSubject/RenderOneSubject";
+import RenderGroup from "../RenderGroup/RenderGroup";
 
 interface IProps {
   index: number;
@@ -8,7 +8,18 @@ interface IProps {
   day: number;
   id: string;
   room: number | undefined;
-  subject: number | undefined;
+  subject:
+    | number
+    | undefined
+    | {
+        index: number;
+        repeat: boolean;
+        day: number;
+        id: string;
+        subject: number;
+        room: number;
+        className: number;
+      }[];
   className: number;
 }
 const OneSubject: FC<IProps> = ({
@@ -20,51 +31,22 @@ const OneSubject: FC<IProps> = ({
   room,
   className,
 }) => {
-  const subjectName = subjects.find((value) => value.id === subject);
   return (
-    <div key={index}>
-      <div
-        style={{
-          backgroundColor: repeat ? "red" : "",
-        }}
-        className={"subject-name"}
-      >
-        <Droppable
-          droppableId={`${className + "=" + day + "=" + index}`}
-          key={id}
-        >
-          {(provided, snapshot) => (
-            <div
-              style={{
-                backgroundColor: snapshot.draggingOverWith ? "gold" : "",
-              }}
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              <Draggable
-                isDragDisabled={!subject}
-                key={Number(String(day + index))}
-                draggableId={`${id}`}
-                index={index}
-              >
-                {(provided) => (
-                  <div
-                    key={index}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <div>{subjectName?.name}</div>
-                  </div>
-                )}
-              </Draggable>
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </div>
-      <div className={"subject-room"}>{room && room}</div>
-    </div>
+    <>
+      {!Array.isArray(subject) && (
+        <RenderOneSubject
+          repeat={repeat}
+          index={index}
+          day={day}
+          id={id}
+          subject={subject}
+          room={room}
+          className={className}
+          key={index}
+        />
+      )}
+      {Array.isArray(subject) && <RenderGroup key={index} subject={subject} />}
+    </>
   );
 };
 

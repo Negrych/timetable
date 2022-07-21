@@ -1,7 +1,7 @@
 export interface IData {
   id: number;
   name: string;
-  timetable: Array<ITimetable[]>;
+  timetable: Array<ITimetable[]> | any;
 }
 
 export interface ITimetable {

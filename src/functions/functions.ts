@@ -6,13 +6,27 @@ export function showRepeat(data: IData[], day: number) {
     let arr = data.map((value) => {
       if (value.timetable[day][less].room) {
         return value.timetable[day][less].room;
+      } else if (Array.isArray(value.timetable[day][less])) {
+        value.timetable[day][less].map((data: { room: number }) => {
+          if (data.room) {
+            return data.room;
+          }
+        });
       }
     });
     arr = arr.filter((item, index) => {
       return arr.indexOf(item) !== index && item !== undefined;
     });
     data.forEach((value) => {
-      if (
+      if (Array.isArray(value.timetable[day][less])) {
+        value.timetable[day][less].forEach(
+          (value: { repeat?: boolean; room: number }) => {
+            if (value.room && arr.includes(value.room)) {
+              value.repeat = true;
+            }
+          }
+        );
+      } else if (
         value.timetable[day][less].room &&
         arr.includes(value.timetable[day][less].room)
       ) {
@@ -70,13 +84,31 @@ export function changeRepeatAfterDrop(
   day2?: number
 ) {
   let arr1 = subjects.map((value) => {
-    if (value["timetable"][day1][less1]["room"]) {
+    if (Array.isArray(value.timetable[day1][less1])) {
+      value.timetable[day1][less1].forEach(
+        (value: { repeat?: boolean; room: number }) => {
+          if (value.room) {
+            value.repeat = false;
+            return value.room;
+          }
+        }
+      );
+    } else if (value["timetable"][day1][less1]["room"]) {
       value["timetable"][day1][less1]["repeat"] = false;
       return value["timetable"][day1][less1]["room"];
     }
   });
   let arr2 = subjects.map((value) => {
-    if (value["timetable"][day2 ?? day1][less2]["room"]) {
+    if (Array.isArray(value.timetable[day2 ?? day1][less2])) {
+      value.timetable[day2 ?? day1][less2].forEach(
+        (value: { repeat?: boolean; room: number }) => {
+          if (value.room) {
+            value.repeat = false;
+            return value.room;
+          }
+        }
+      );
+    } else if (value["timetable"][day2 ?? day1][less2]["room"]) {
       value["timetable"][day2 ?? day1][less2]["repeat"] = false;
       return value["timetable"][day2 ?? day1][less2]["room"];
     }
@@ -91,7 +123,16 @@ export function changeRepeatAfterDrop(
   });
 
   subjects.forEach((value) => {
-    if (
+    if (Array.isArray(value.timetable[day1][less1])) {
+      value.timetable[day1][less1].forEach(
+        (value: { repeat?: boolean; room: number }) => {
+          if (value.room && arr1.includes(value.room)) {
+            value.repeat = true;
+            console.log(value);
+          }
+        }
+      );
+    } else if (
       value["timetable"][day1][less1].room &&
       arr1.includes(value["timetable"][day1][less1].room)
     ) {
@@ -100,7 +141,15 @@ export function changeRepeatAfterDrop(
   });
 
   subjects.forEach((value) => {
-    if (
+    if (Array.isArray(value.timetable[day2 ?? day1][less2])) {
+      value.timetable[day2 ?? day1][less2].forEach(
+        (value: { repeat?: boolean; room: number }) => {
+          if (value.room && arr2.includes(value.room)) {
+            value.repeat = true;
+          }
+        }
+      );
+    } else if (
       value["timetable"][day2 ?? day1][less2].room &&
       arr2.includes(value["timetable"][day2 ?? day1][less2].room)
     ) {

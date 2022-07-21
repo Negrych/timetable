@@ -154,18 +154,38 @@ function randomSubject(subjects: { id: number; name: string }[]) {
     const rand = Math.floor(Math.random() * (subjects.length - 1));
     const randRoom = Math.floor(Math.random() * (rooms.length - 1));
     const randLess = Math.floor(Math.random() * (7 - 1)) + 1;
+    const randGroup = Math.floor(Math.random() * (7 - 1)) + 1;
     if (i === randLess) {
       arr.push({
         subject: undefined,
         id: v4(),
       });
     } else {
-      arr.push({
-        subject: subjects[rand].id,
-        teacher: addTeacher(subjects[rand], teachersListWithSubject),
-        room: rooms[randRoom].name,
-        id: v4(),
-      });
+      if (i === randGroup) {
+        const rand2 = Math.floor(Math.random() * (subjects.length - 1));
+        const randRoom2 = Math.floor(Math.random() * (rooms.length - 1));
+        arr.push([
+          {
+            subject: subjects[rand].id,
+            teacher: addTeacher(subjects[rand], teachersListWithSubject),
+            room: rooms[randRoom].name,
+            id: v4(),
+          },
+          {
+            subject: subjects[rand2].id,
+            teacher: addTeacher(subjects[rand2], teachersListWithSubject),
+            room: rooms[randRoom2].name,
+            id: v4(),
+          },
+        ]);
+      } else {
+        arr.push({
+          subject: subjects[rand].id,
+          teacher: addTeacher(subjects[rand], teachersListWithSubject),
+          room: rooms[randRoom].name,
+          id: v4(),
+        });
+      }
     }
   }
   return arr;
