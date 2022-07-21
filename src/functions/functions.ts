@@ -5,7 +5,7 @@ export function showRepeat(data: IData[], day: number) {
   lessons.forEach((less) => {
     let arr = data.map((value) => {
       if (value.timetable[day][less].room) {
-        return value.timetable[day][less].room?.name;
+        return value.timetable[day][less].room;
       }
     });
     arr = arr.filter((item, index) => {
@@ -14,7 +14,7 @@ export function showRepeat(data: IData[], day: number) {
     data.forEach((value) => {
       if (
         value.timetable[day][less].room &&
-        arr.includes(value.timetable[day][less].room?.name)
+        arr.includes(value.timetable[day][less].room)
       ) {
         value.timetable[day][less].repeat = true;
       }
@@ -105,13 +105,13 @@ function changeRepeatAfterDrop(
   let arr1 = subjects.map((value) => {
     if (value["timetable"][day1][less1]["room"]) {
       value["timetable"][day1][less1]["repeat"] = false;
-      return value["timetable"][day1][less1]["room"]?.name;
+      return value["timetable"][day1][less1]["room"];
     }
   });
   let arr2 = subjects.map((value) => {
     if (value["timetable"][day2 ?? day1][less2]["room"]) {
       value["timetable"][day2 ?? day1][less2]["repeat"] = false;
-      return value["timetable"][day2 ?? day1][less2]["room"]?.name;
+      return value["timetable"][day2 ?? day1][less2]["room"];
     }
   });
 
@@ -126,7 +126,7 @@ function changeRepeatAfterDrop(
   subjects.forEach((value) => {
     if (
       value["timetable"][day1][less1].room &&
-      arr1.includes(value["timetable"][day1][less1].room?.name)
+      arr1.includes(value["timetable"][day1][less1].room)
     ) {
       value["timetable"][day1][less1].repeat = true;
     }
@@ -135,7 +135,7 @@ function changeRepeatAfterDrop(
   subjects.forEach((value) => {
     if (
       value["timetable"][day2 ?? day1][less2].room &&
-      arr2.includes(value["timetable"][day2 ?? day1][less2].room?.name)
+      arr2.includes(value["timetable"][day2 ?? day1][less2].room)
     ) {
       value["timetable"][day2 ?? day1][less2].repeat = true;
     }

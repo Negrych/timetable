@@ -57,47 +57,47 @@ export const subjects = [
 
 export const classSchool = [
   {
-    id: "1",
+    id: 1,
     name: "5A",
   },
   {
-    id: "2",
+    id: 2,
     name: "5Б",
   },
   {
-    id: "3",
+    id: 3,
     name: "6 А",
   },
   {
-    id: "4",
+    id: 4,
     name: "6 Б",
   },
   {
-    id: "5",
+    id: 5,
     name: "7",
   },
   {
-    id: "6",
+    id: 6,
     name: "8А",
   },
   {
-    id: "7",
+    id: 7,
     name: "8Б",
   },
   {
-    id: "8",
+    id: 8,
     name: "9А",
   },
   {
-    id: "9",
+    id: 9,
     name: "9Б",
   },
   {
-    id: "10",
+    id: 10,
     name: "10",
   },
   {
-    id: "11",
+    id: 11,
     name: "11",
   },
 ];
@@ -138,7 +138,7 @@ export const rooms = [
 const teachersListWithSubject = teacher();
 
 export function showTimeTable() {
-  const timeTable = classSchool.map((value: { id: string; name: string }) => {
+  const timeTable = classSchool.map((value: { id: number; name: string }) => {
     return {
       ...value,
       timetable: days.map(() => randomSubject(subjects)),
@@ -156,14 +156,14 @@ function randomSubject(subjects: { id: number; name: string }[]) {
     const randLess = Math.floor(Math.random() * (7 - 1)) + 1;
     if (i === randLess) {
       arr.push({
-        subject: { name: "" },
+        subject: undefined,
         id: v4(),
       });
     } else {
       arr.push({
-        subject: subjects[rand],
+        subject: subjects[rand].id,
         teacher: addTeacher(subjects[rand], teachersListWithSubject),
-        room: rooms[randRoom],
+        room: rooms[randRoom].name,
         id: v4(),
       });
     }
@@ -208,15 +208,15 @@ function addTeacher(
       // if teacher have this subject
       for (const i of value.subjectsTeacher) {
         if (id === i.id) {
-          return value.name;
+          return value.id;
         }
       }
     }
   );
-  arr = arr.filter((value: string | undefined) => value !== undefined);
+  arr = arr.filter((value: number | undefined) => value !== undefined);
   if (arr.length) {
-    return arr;
+    return arr[0];
   } else {
-    return [teachers[0].name];
+    return teachers[0].id;
   }
 }
