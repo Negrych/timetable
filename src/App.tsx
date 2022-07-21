@@ -32,8 +32,8 @@ const App = () => {
           </div>
         )}
         {subjects &&
-          subjects.map((value: IData) => (
-            <Class key={value.id} classItem={value} />
+          subjects.map((value: IData, index: number) => (
+            <Class key={value.id} classItem={value} className={index} />
           ))}
       </div>
     </div>

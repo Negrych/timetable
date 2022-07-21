@@ -22,80 +22,47 @@ export function showRepeat(data: IData[], day: number) {
   });
 }
 
-export function handleDrop(
-  result: {
-    draggableId: string;
-    type: string;
-    source: {
-      index: number;
-      droppableId: string;
-    };
-    destination: {
-      droppableId: string;
-      index: number;
-    };
-  },
-  subjects: IData[]
-) {
-  const classItem = result.source.droppableId.split("=")[2];
-  const day1 = +result.source.droppableId.split("=")[0];
-  const day2 = +result.destination.droppableId.split("=")[0];
-  const idFirstElement = result.source.droppableId.split("=")[3];
-  const idSecondElement = result.destination.droppableId.split("=")[3];
+export function handleDrop(result: {
+  draggableId: string;
+  type: string;
+  source: {
+    index: number;
+    droppableId: string;
+  };
+  destination: {
+    droppableId: string;
+    index: number;
+  };
+}) {
+  const arr1 = result.source.droppableId.split("=");
+  const arr2 = result.destination.droppableId.split("=");
+
+  const classItem = +arr1[0];
+  const day1 = +arr1[1];
+  const indexFirstElement = +arr1[2];
+
+  const day2 = +arr2[1];
+  const indexSecondElement = +arr2[2];
 
   if (day1 === day2) {
-    return changeSubject({
+    return {
       day1,
-      idFirstElement,
-      idSecondElement,
+      indexFirstElement,
+      indexSecondElement,
       classItem,
-      subjects,
-    });
+    };
   } else {
-    return changeSubject({
+    return {
       day1,
       day2,
-      idFirstElement,
-      idSecondElement,
+      indexFirstElement,
+      indexSecondElement,
       classItem,
-      subjects,
-    });
+    };
   }
 }
 
-function changeSubject(arg: {
-  day1: number;
-  idFirstElement: string;
-  idSecondElement: string;
-  classItem: string;
-  subjects: IData[];
-  day2?: number;
-}) {
-  const { day1, day2, idFirstElement, idSecondElement, classItem, subjects } =
-    arg;
-  const json = JSON.stringify(subjects);
-  const newArr = JSON.parse(json);
-
-  const classIndex = newArr.findIndex(
-    (item: { name: string }) => item.name === classItem
-  );
-  const indexFirst = newArr[classIndex]["timetable"][day1].findIndex(
-    (item: { id: string }) => item.id === idFirstElement
-  );
-
-  const indexSecond = newArr[classIndex]["timetable"][day2 ?? day1].findIndex(
-    (item: { id: string }) => item.id === idSecondElement
-  );
-
-  const temp = newArr[classIndex]["timetable"][day1][indexFirst];
-  newArr[classIndex]["timetable"][day1][indexFirst] =
-    newArr[classIndex]["timetable"][day2 ?? day1][indexSecond];
-  newArr[classIndex]["timetable"][day2 ?? day1][indexSecond] = temp;
-  changeRepeatAfterDrop(newArr, day1, indexFirst, indexSecond, day2);
-  return newArr;
-}
-
-function changeRepeatAfterDrop(
+export function changeRepeatAfterDrop(
   subjects: IData[],
   day1: number,
   less1: number,
@@ -140,4 +107,5 @@ function changeRepeatAfterDrop(
       value["timetable"][day2 ?? day1][less2].repeat = true;
     }
   });
+  return subjects;
 }

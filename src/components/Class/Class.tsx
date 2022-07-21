@@ -4,20 +4,20 @@ import Timetable from "../Timetable/Timetable";
 import "../../App.css";
 import { DragDropContext } from "react-beautiful-dnd";
 import { handleDrop } from "../../functions/functions";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { setSubject } from "../../store/subjectSlice";
+import { useAppDispatch } from "../../hooks/redux";
+import { changeSubject } from "../../store/subjectSlice";
 import { IData, ITimetable } from "../../interfaces/interfaces";
 
 interface IProps {
   classItem: IData;
+  className: number;
 }
 
-const Class: FC<IProps> = ({ classItem }) => {
+const Class: FC<IProps> = ({ classItem, className }) => {
   const dispatch = useAppDispatch();
-  const { subjects } = useAppSelector((state) => state.subjectsReducer);
 
   const handleOnDragEnd = (result: any) => {
-    dispatch(setSubject(handleDrop(result, subjects)));
+    dispatch(changeSubject(handleDrop(result)));
   };
 
   return (
@@ -29,6 +29,7 @@ const Class: FC<IProps> = ({ classItem }) => {
             classItem={classItem}
             oneSubject={oneSubject}
             day={index}
+            className={className}
           />
         ))}
       </DragDropContext>

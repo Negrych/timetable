@@ -10,9 +10,10 @@ interface IProps {
   };
   oneSubject: ITimetable[];
   day: number;
+  className: number;
 }
 
-const Timetable: FC<IProps> = ({ classItem, oneSubject, day }) => {
+const Timetable: FC<IProps> = ({ classItem, oneSubject, day, className }) => {
   return (
     <div style={{ height: "500px" }} className={"day"}>
       {classItem &&
@@ -27,6 +28,7 @@ const Timetable: FC<IProps> = ({ classItem, oneSubject, day }) => {
               classItem={classItem}
               id={value.id}
               room={value.room}
+              className={className}
             />
           );
         })}

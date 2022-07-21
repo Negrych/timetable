@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { subjects } from "../../back-end/data";
 
@@ -12,6 +12,7 @@ interface IProps {
   id: string;
   room: number | undefined;
   subject: number | undefined;
+  className: number;
 }
 const OneSubject: FC<IProps> = ({
   index,
@@ -21,9 +22,9 @@ const OneSubject: FC<IProps> = ({
   id,
   subject,
   room,
+  className,
 }) => {
   const subjectName = subjects.find((value) => value.id === subject);
-
   return (
     <div key={index}>
       <div
@@ -33,7 +34,7 @@ const OneSubject: FC<IProps> = ({
         className={"subject-name"}
       >
         <Droppable
-          droppableId={`${day + "=" + index + "=" + classItem.name + "=" + id}`}
+          droppableId={`${className + "=" + day + "=" + index}`}
           key={id}
         >
           {(provided, snapshot) => (
@@ -71,4 +72,10 @@ const OneSubject: FC<IProps> = ({
   );
 };
 
-export default OneSubject;
+export default memo(OneSubject, (prevProps, nextProps) => {
+  if (prevProps.repeat === nextProps.repeat) {
+    return true;
+  } else {
+    return false;
+  }
+});
