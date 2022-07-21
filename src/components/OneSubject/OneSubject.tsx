@@ -3,9 +3,6 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { subjects } from "../../back-end/data";
 
 interface IProps {
-  classItem: {
-    name: string;
-  };
   index: number;
   repeat: boolean | undefined;
   day: number;
@@ -18,7 +15,6 @@ const OneSubject: FC<IProps> = ({
   index,
   repeat,
   day,
-  classItem,
   id,
   subject,
   room,
@@ -72,10 +68,4 @@ const OneSubject: FC<IProps> = ({
   );
 };
 
-export default memo(OneSubject, (prevProps, nextProps) => {
-  if (prevProps.repeat === nextProps.repeat) {
-    return true;
-  } else {
-    return false;
-  }
-});
+export default memo(OneSubject);

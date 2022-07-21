@@ -40,7 +40,7 @@ const subjectSlice = createSlice({
       state.subjects[classItem]["timetable"][day2 ?? day1][indexSecondElement] =
         temp;
 
-      state.subjects = changeRepeatAfterDrop(
+      changeRepeatAfterDrop(
         state.subjects,
         day1,
         indexFirstElement,

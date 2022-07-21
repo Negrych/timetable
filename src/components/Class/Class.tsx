@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Timetable from "../Timetable/Timetable";
 
 import "../../App.css";
@@ -26,7 +26,6 @@ const Class: FC<IProps> = ({ classItem, className }) => {
         {classItem.timetable.map((oneSubject: ITimetable[], index: number) => (
           <Timetable
             key={index}
-            classItem={classItem}
             oneSubject={oneSubject}
             day={index}
             className={className}
@@ -37,4 +36,4 @@ const Class: FC<IProps> = ({ classItem, className }) => {
   );
 };
 
-export default Class;
+export default memo(Class);

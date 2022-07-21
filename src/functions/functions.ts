@@ -107,5 +107,4 @@ export function changeRepeatAfterDrop(
       value["timetable"][day2 ?? day1][less2].repeat = true;
     }
   });
-  return subjects;
 }
