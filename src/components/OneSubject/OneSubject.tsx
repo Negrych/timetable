@@ -45,7 +45,15 @@ const OneSubject: FC<IProps> = ({
           key={index}
         />
       )}
-      {Array.isArray(subject) && <RenderGroup key={index} subject={subject} />}
+      {Array.isArray(subject) && (
+        <RenderGroup
+          key={index}
+          subject={subject}
+          day={day}
+          className={className}
+          index={index}
+        />
+      )}
     </>
   );
 };

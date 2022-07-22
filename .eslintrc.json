@@ -36,7 +36,7 @@
     "jsx-quotes": ["error", "prefer-double"],
     "semi": ["error", "always"],
     "max-len": [2, {"code": 300, "tabWidth": 4, "ignoreUrls": true}],
-    "indent": ["error", 2]
+    "indent": ["warn", 2]
 //    "import/order": ["error", {
 //      "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],"newlines-between": "always-and-inside-groups"
 //    }]

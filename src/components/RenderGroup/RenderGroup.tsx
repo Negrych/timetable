@@ -2,38 +2,42 @@ import React, { FC } from "react";
 import RenderOneSubject from "../RenderOneSubject/RenderOneSubject";
 
 interface IProps {
+  index: number;
+  day: number;
+  className: number;
   subject: {
-    index: number;
     repeat: boolean;
-    day: number;
     id: string;
     subject: number;
     room: number;
-    className: number;
   }[];
 }
 
-const RenderGroup: FC<IProps> = ({ subject }) => {
+const RenderGroup: FC<IProps> = ({ subject, className, day, index }) => {
   return (
     <div className={"groupWrap"} style={{ display: "flex" }}>
       <RenderOneSubject
+        indexInArr={0}
         repeat={subject[0].repeat}
-        index={new Date().getMilliseconds()}
-        className={subject[0].className}
-        day={subject[0].day}
+        index={index}
+        className={className}
+        day={day}
         id={subject[0].id}
+        randomIndex={new Date().getMilliseconds()}
         subject={subject[0].subject}
-        room={subject[0].subject}
+        room={subject[0].room}
       />
       <div>/</div>
       <RenderOneSubject
+        indexInArr={1}
         repeat={subject[1].repeat}
-        index={new Date().getMilliseconds() + 1}
-        className={subject[1].className}
-        day={subject[1].day}
+        index={index}
+        className={className}
+        day={day}
         id={subject[1].id}
         subject={subject[1].subject}
-        room={subject[1].subject}
+        room={subject[1].room}
+        randomIndex={new Date().getMilliseconds() + 1}
       />
     </div>
   );

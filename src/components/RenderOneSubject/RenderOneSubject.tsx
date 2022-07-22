@@ -3,15 +3,14 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { subjects } from "../../back-end/data";
 
 interface IProps {
+  indexInArr?: number;
+  randomIndex?: number;
   repeat: boolean | undefined;
   index: number;
   className: number;
   day: number;
   id: string;
-  subject:
-    | number
-    | undefined
-    | { subject: number; teacher: number; room: number; id: string }[];
+  subject: number | undefined;
   room: number | undefined;
 }
 
@@ -23,6 +22,8 @@ const RenderOneSubject: FC<IProps> = ({
   id,
   subject,
   room,
+  randomIndex,
+  indexInArr,
 }) => {
   const subjectName = subjects.find((value) => value.id === subject);
   return (
@@ -34,7 +35,9 @@ const RenderOneSubject: FC<IProps> = ({
         className={"subject-name"}
       >
         <Droppable
-          droppableId={`${className + "=" + day + "=" + index}`}
+          droppableId={`${
+            className + "=" + day + "=" + index + "=" + indexInArr
+          }`}
           key={id}
         >
           {(provided, snapshot) => (
@@ -49,7 +52,7 @@ const RenderOneSubject: FC<IProps> = ({
                 isDragDisabled={!subject}
                 key={Number(String(day + index))}
                 draggableId={`${id}`}
-                index={index}
+                index={randomIndex ? randomIndex : index}
               >
                 {(provided) => (
                   <div
